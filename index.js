@@ -109,6 +109,44 @@ function buyUpgrade(upgradeName) {
 	}
 }
 
+function save() {
+	localStorage.clear();
+
+	upgrades.map((upgrade) => {
+		const obj = JSON.stringify({
+			parsedLevel: parseFloat(upgrade.level.innerHTML),
+			parsedCost: upgrade.parsedCost,
+			parsedIncrease: upgrade.parsedIncrease,
+		});
+
+		localStorage.setItem(upgrade.name, obj);
+
+		localStorage.setItem('gemsPerClick', JSON.stringify(gemsPerClick));
+		localStorage.setItem('gemsPerSecond', JSON.stringify(gemsPerSecond));
+
+		localStorage.setItem('gem', JSON.stringify(parsedGem));
+	});
+}
+
+function load() {
+	upgrades.map((upgrade) => {
+		const savedValues = JSON.parse(localStorage.getItem(upgrade.name));
+
+		upgrade.parsedCost = savedValues.parsedCost;
+		upgrade.parsedIncrease = savedValues.parsedIncrease;
+
+		upgrade.level.innerHTML = savedValues.parsedLevel;
+		upgrade.cost.innerHTML = Math.round(upgrade.parsedCost);
+		upgrade.increase.innerHTML = upgrade.parsedIncrease;
+	});
+
+	gemsPerClick = JSON.parse(localStorage.getItem('gemsPerClick'));
+	gemsPerSecond = JSON.parse(localStorage.getItem('gemsPerSecond'));
+	parsedGem = JSON.parse(localStorage.getItem('gem'));
+
+	gem.innerHTML = Math.round(parsedGem);
+}
+
 setInterval(() => {
 	parsedGem += gemsPerSecond / 10;
 	gem.innerHTML = Math.round(parsedGem);
