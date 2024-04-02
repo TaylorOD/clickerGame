@@ -1,4 +1,4 @@
-import { upgrades } from './consts/upgrades.js';
+import { powerUpIntervals, upgrades } from './consts/upgrades.js';
 
 let gem = document.querySelector('.gem-cost');
 let parsedGem = parseFloat(gem.innerHTML);
@@ -11,7 +11,13 @@ let gemImgContainer = document.querySelector('.gem-img-container');
 let gemsPerClick = 1;
 let gemsPerSecond = 0;
 
+const backgroundMusic = new Audio('/assets/audio/bgm.mp3');
+backgroundMusic.volume = 0.2;
+
 function incrementGem(event) {
+	const clickSound = new Audio('/assets/audio/click.wav');
+	clickSound.play();
+
 	gem.innerHTML = Math.round((parsedGem += gemsPerClick));
 
 	const x = event.offsetX;
@@ -39,23 +45,85 @@ function buyUpgrade(upgradeName) {
 			return upgrade;
 		}
 	});
+
+	const upgradeDiv = document.getElementById(`${matchedUpgrade.name}-upgrade`);
+	const nextLevelDiv = document.getElementById(
+		`${matchedUpgrade.name}-next-level`
+	);
+	const nextLevelP = document.getElementById(`${matchedUpgrade.name}-next-p`);
+
 	if (parsedGem >= matchedUpgrade.parsedCost) {
+		const upgradeSound = new Audio('/assets/audio/upgrade.mp3');
+		upgradeSound.volume = 0.2;
+		upgradeSound.play();
+
 		gem.innerHTML = Math.round((parsedGem -= matchedUpgrade.parsedCost));
+
+		let index = powerUpIntervals.indexOf(
+			parseFloat(matchedUpgrade.level.innerHTML)
+		);
+
+		// Handles non powerUp levels
+		if (index !== -1) {
+			upgradeDiv.style.cssText = 'border-color: white;';
+			nextLevelDiv.style.cssText =
+				'background-color: white; font-weight: normal;';
+
+			matchedUpgrade.cost.innerHTML = Math.round(
+				(matchedUpgrade.parsedCost *= matchedUpgrade.costMultiplier)
+			);
+
+			if (matchedUpgrade.name === 'clicker') {
+				gemsPerClick *= matchedUpgrade.powerUps[index].multiplier;
+				nextLevelP.innerHTML = `${matchedUpgrade.parsedIncrease} gems per click`;
+			} else {
+				gemsPerSecond -= matchedUpgrade.power;
+				matchedUpgrade.power *= matchedUpgrade.powerUps[index].multiplier;
+				gemsPerSecond += matchedUpgrade.power;
+				nextLevelP.innerHTML = `${matchedUpgrade.parsedIncrease} gems per second`;
+			}
+		}
 
 		matchedUpgrade.level.innerHTML++;
 
-		matchedUpgrade.parsedIncrease = parseFloat(
-			(matchedUpgrade.parsedIncrease * matchedUpgrade.gemMultiplier).toFixed(2)
+		index = powerUpIntervals.indexOf(
+			parseFloat(matchedUpgrade.level.innerHTML)
 		);
-		matchedUpgrade.increase.innerHTML = matchedUpgrade.parsedIncrease;
 
-		matchedUpgrade.parsedCost *= matchedUpgrade.costMultiplier;
-		matchedUpgrade.cost.innerHTML = Math.round(matchedUpgrade.parsedCost);
+		// Handles upgrades for powerUp levels
+		if (index !== -1) {
+			upgradeDiv.style.cssText = 'border-color: orange;';
+			nextLevelDiv.style.cssText =
+				'background-color: #CC4500; font-weight: bold;';
+			nextLevelP.innerText = matchedUpgrade.powerUps[index].description;
+
+			matchedUpgrade.cost.innerHTML = Math.round(
+				matchedUpgrade.parsedCost *
+					2.5 *
+					1.004 ** parseFloat(matchedUpgrade.level.innerHTML)
+			);
+		} else {
+			matchedUpgrade.cost.innerHTML = Math.round(
+				(matchedUpgrade.parsedCost *= matchedUpgrade.costMultiplier)
+			);
+			matchedUpgrade.parsedIncrease = parseFloat(
+				(matchedUpgrade.parsedIncrease * matchedUpgrade.gemMultiplier).toFixed(
+					2
+				)
+			);
+			if (matchedUpgrade.name === 'clicker') {
+				nextLevelP.innerHTML = `${matchedUpgrade.parsedIncrease} gems per click`;
+			} else {
+				nextLevelP.innerHTML = `${matchedUpgrade.parsedIncrease} gems per second`;
+			}
+		}
 
 		if (matchedUpgrade.name === 'clicker') {
 			gemsPerClick += matchedUpgrade.parsedIncrease;
 		} else {
-			gemsPerSecond += matchedUpgrade.parsedIncrease;
+			gemsPerSecond -= matchedUpgrade.power;
+			matchedUpgrade.power += matchedUpgrade.parsedIncrease;
+			gemsPerSecond += matchedUpgrade.power;
 		}
 	}
 }
@@ -104,6 +172,8 @@ setInterval(() => {
 
 	gpcText.innerHTML = Math.round(gemsPerClick);
 	gpsText.innerHTML = Math.round(gemsPerSecond);
+	// Toggle to turn background music on or off:
+	backgroundMusic.play();
 }, 100);
 
 window.incrementGem = incrementGem;
