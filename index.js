@@ -1,3 +1,5 @@
+import { upgrades } from './consts/upgrades.js';
+
 let gem = document.querySelector('.gem-cost');
 let parsedGem = parseFloat(gem.innerHTML);
 
@@ -8,57 +10,6 @@ let gemImgContainer = document.querySelector('.gem-img-container');
 
 let gemsPerClick = 1;
 let gemsPerSecond = 0;
-
-const upgrades = [
-	{
-		name: 'clicker',
-		cost: document.querySelector('.clicker-cost'),
-		parsedCost: parseFloat(document.querySelector('.clicker-cost').innerHTML),
-		increase: document.querySelector('.clicker-increase'),
-		parsedIncrease: parseFloat(
-			document.querySelector('.clicker-increase').innerHTML
-		),
-		level: document.querySelector('.clicker-level'),
-		gemMultiplier: 1.025,
-		costMultiplier: 1.12,
-	},
-	{
-		name: 'pickaxe',
-		cost: document.querySelector('.pickaxe-cost'),
-		parsedCost: parseFloat(document.querySelector('.pickaxe-cost').innerHTML),
-		increase: document.querySelector('.pickaxe-increase'),
-		parsedIncrease: parseFloat(
-			document.querySelector('.pickaxe-increase').innerHTML
-		),
-		level: document.querySelector('.pickaxe-level'),
-		gemMultiplier: 1.03,
-		costMultiplier: 1.15,
-	},
-	{
-		name: 'miner',
-		cost: document.querySelector('.miner-cost'),
-		parsedCost: parseFloat(document.querySelector('.miner-cost').innerHTML),
-		increase: document.querySelector('.miner-increase'),
-		parsedIncrease: parseFloat(
-			document.querySelector('.miner-increase').innerHTML
-		),
-		level: document.querySelector('.miner-level'),
-		gemMultiplier: 1.035,
-		costMultiplier: 1.11,
-	},
-	{
-		name: 'factory',
-		cost: document.querySelector('.factory-cost'),
-		parsedCost: parseFloat(document.querySelector('.factory-cost').innerHTML),
-		increase: document.querySelector('.factory-increase'),
-		parsedIncrease: parseFloat(
-			document.querySelector('.factory-increase').innerHTML
-		),
-		level: document.querySelector('.factory-level'),
-		gemMultiplier: 1.04,
-		costMultiplier: 1.1,
-	},
-];
 
 function incrementGem(event) {
 	gem.innerHTML = Math.round((parsedGem += gemsPerClick));
@@ -154,3 +105,8 @@ setInterval(() => {
 	gpcText.innerHTML = Math.round(gemsPerClick);
 	gpsText.innerHTML = Math.round(gemsPerSecond);
 }, 100);
+
+window.incrementGem = incrementGem;
+window.buyUpgrade = buyUpgrade;
+window.save = save;
+window.load = load;

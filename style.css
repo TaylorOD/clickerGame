@@ -22,6 +22,13 @@ body {
 	margin-bottom: 30px;
 }
 
+.right {
+	max-height: 400px;
+	width: 550px;
+	padding: 20px 5px;
+	overflow-y: scroll;
+}
+
 .gem-image {
 	width: 300px;
 	cursor: pointer;
@@ -172,4 +179,20 @@ body {
 .util-button:hover {
 	opacity: 0.7;
 	cursor: pointer;
+}
+
+::-webkit-scrollbar {
+	width: 10px;
+}
+
+::-webkit-scrollbar-track {
+	background: white;
+}
+
+::-webkit-scrollbar-thumb {
+	background: #888;
+}
+
+::-webkit-scrollbar-thumb:hover {
+	background: #555;
 }

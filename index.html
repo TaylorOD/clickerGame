@@ -22,21 +22,22 @@
 						/>
 					</div>
 				</div>
-				<div class="right">
-					<div class="upgrade" onclick="buyUpgrade('clicker')">
+
+				<script id="upgrade-template" type="text/template">
+					<div class="upgrade" onclick="buyUpgrade('{{name}}')">
 						<div class="left-section">
 							<img
-								src="./assets/clicker.png"
+								src="{{image}}"
 								alt=""
 								srcset=""
 								class="upgrade-image"
 							/>
 						</div>
 						<div class="mid-section">
-							<h4 class="clicker">Clicker</h4>
+							<h4 class="{{name}}">{{name}}</h4>
 							<div class="cost-info">
 								<p class="cost-text">
-									Cost: <span class="clicker-cost">10</span>
+									Cost: <span class="{{name}}-cost">{{cost}}</span>
 								</p>
 								<img
 									src="./assets/gem.png"
@@ -48,125 +49,19 @@
 							</div>
 						</div>
 						<div class="right-section">
-							Level <span class="clicker-level">0</span>
+							Level <span class="{{name}}-level">0</span>
 						</div>
 
 						<div class="next-level-info">
 							<p>
-								+<span class="clicker-increase"> 1 </span> gems <br />
+								+<span class="{{name}}-increase"> {{increase}} </span> gems <br />
 								per click
 							</p>
 						</div>
 					</div>
+				</script>
 
-					<div class="upgrade" onclick="buyUpgrade('pickaxe')">
-						<div class="left-section">
-							<img
-								src="./assets/pickaxe.png"
-								alt=""
-								srcset=""
-								class="upgrade-image"
-							/>
-						</div>
-						<div class="mid-section">
-							<h4 class="pickaxe">Pickaxe</h4>
-							<div class="cost-info">
-								<p class="cost-text">
-									Cost: <span class="pickaxe-cost">100</span>
-								</p>
-								<img
-									src="./assets/gem.png"
-									alt=""
-									srcset=""
-									class="gem-cost-image"
-									draggable="false"
-								/>
-							</div>
-						</div>
-						<div class="right-section">
-							Level <span class="pickaxe-level">0</span>
-						</div>
-
-						<div class="next-level-info">
-							<p>
-								+<span class="pickaxe-increase"> 4 </span> gems <br />
-								per second
-							</p>
-						</div>
-					</div>
-
-					<div class="upgrade" onclick="buyUpgrade('miner')">
-						<div class="left-section">
-							<img
-								src="./assets/miner.png"
-								alt=""
-								srcset=""
-								class="upgrade-image"
-							/>
-						</div>
-						<div class="mid-section">
-							<h4 class="miner">Miner</h4>
-							<div class="cost-info">
-								<p class="cost-text">
-									Cost: <span class="miner-cost">850</span>
-								</p>
-								<img
-									src="./assets/gem.png"
-									alt=""
-									srcset=""
-									class="gem-cost-image"
-									draggable="false"
-								/>
-							</div>
-						</div>
-						<div class="right-section">
-							Level <span class="miner-level">0</span>
-						</div>
-
-						<div class="next-level-info">
-							<p>
-								+<span class="miner-increase"> 24 </span> gems <br />
-								per second
-							</p>
-						</div>
-					</div>
-
-					<div class="upgrade" onclick="buyUpgrade('factory')">
-						<div class="left-section">
-							<img
-								src="./assets/factory.png"
-								alt=""
-								srcset=""
-								class="upgrade-image"
-							/>
-						</div>
-						<div class="mid-section">
-							<h4 class="factory">Factory</h4>
-							<div class="cost-info">
-								<p class="cost-text">
-									Cost: <span class="factory-cost">4750</span>
-								</p>
-								<img
-									src="./assets/gem.png"
-									alt=""
-									srcset=""
-									class="gem-cost-image"
-									draggable="false"
-								/>
-							</div>
-						</div>
-						<div class="right-section">
-							Level <span class="factory-level">0</span>
-						</div>
-
-						<div class="next-level-info">
-							<p>
-								+<span class="factory-increase"> 82 </span> gems <br />
-								per second
-							</p>
-						</div>
-					</div>
-				</div>
+				<div class="right" id="upgrades-container"></div>
 			</div>
 
 			<div class="statistics">
@@ -181,6 +76,6 @@
 			</div>
 		</section>
 
-		<script src="index.js"></script>
+		<script type="module" src="index.js"></script>
 	</body>
 </html>
