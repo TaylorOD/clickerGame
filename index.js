@@ -8,6 +8,10 @@ let gpsText = document.getElementById('gps-text');
 
 let gemImgContainer = document.querySelector('.gem-img-container');
 
+let upgradesNavButton = document.getElementById('upgrades-nav-button');
+let skillsNavButton = document.getElementById('skills-nav-button');
+let artifactNavButton = document.getElementById('artifacts-nav-button');
+
 let gemsPerClick = 1;
 let gemsPerSecond = 0;
 
@@ -42,10 +46,13 @@ const gemAnimationTimeout = (div) => {
 function buyUpgrade(upgradeName) {
 	const matchedUpgrade = upgrades.find((upgrade) => {
 		if (upgrade.name === upgradeName) {
+			console.log(upgradeName, 'upgradeName');
+			console.log(upgrade, 'upgrade');
 			return upgrade;
 		}
 	});
-
+	console.log(matchedUpgrade, 'matchedUpgrade');
+	console.log(matchedUpgrade.name, 'matchedUpgrade.name');
 	const upgradeDiv = document.getElementById(`${matchedUpgrade.name}-upgrade`);
 	const nextLevelDiv = document.getElementById(
 		`${matchedUpgrade.name}-next-level`
@@ -173,8 +180,39 @@ setInterval(() => {
 	gpcText.innerHTML = Math.round(gemsPerClick);
 	gpsText.innerHTML = Math.round(gemsPerSecond);
 	// Toggle to turn background music on or off:
-	backgroundMusic.play();
+	// backgroundMusic.play();
 }, 100);
+
+skillsNavButton.addEventListener('click', function () {
+	const upgradeContainers = document.querySelectorAll('.upgrade');
+	upgradeContainers.forEach((container) => {
+		if (container.classList.contains('type-skill')) {
+			container.style.display = 'flex';
+		} else {
+			container.style.display = 'none';
+		}
+	});
+});
+upgradesNavButton.addEventListener('click', function () {
+	const upgradeContainers = document.querySelectorAll('.upgrade');
+	upgradeContainers.forEach((container) => {
+		if (container.classList.contains('type-upgrade')) {
+			container.style.display = 'flex';
+		} else {
+			container.style.display = 'none';
+		}
+	});
+});
+artifactNavButton.addEventListener('click', function () {
+	const upgradeContainers = document.querySelectorAll('.upgrade');
+	upgradeContainers.forEach((container) => {
+		if (container.classList.contains('type-artifact')) {
+			container.style.display = 'flex';
+		} else {
+			container.style.display = 'none';
+		}
+	});
+});
 
 window.incrementGem = incrementGem;
 window.buyUpgrade = buyUpgrade;
