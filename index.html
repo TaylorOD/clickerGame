@@ -10,7 +10,7 @@
 		<section>
 			<div class="main">
 				<div class="left">
-					<p>Gems: <br /><span class="gem-cost pink-text">5000</span></p>
+					<p>Gems: <br /><span class="gem-cost pink-text">15000</span></p>
 					<div class="gem-img-container">
 						<img
 							src="./assets/gem.png"
@@ -78,9 +78,14 @@
 				</div>
 			</div>
 			<div class="util-buttons">
+				<button class="util-button prestige-button" onclick="prestige()">
+					Prestige
+				</button>
 				<button class="util-button" onclick="save()">Save</button>
 				<button class="util-button" onclick="load()">Load</button>
 			</div>
+
+			<div class="relic">Relic: <span id="relic">0</span></div>
 		</section>
 
 		<script type="module" src="index.js"></script>

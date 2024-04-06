@@ -1,4 +1,5 @@
 import { powerUpIntervals, upgrades } from './consts/upgrades.js';
+import { defaultUpgradeValues } from './consts/defaultValues.js';
 
 let gem = document.querySelector('.gem-cost');
 let parsedGem = parseFloat(gem.innerHTML);
@@ -11,6 +12,10 @@ let gemImgContainer = document.querySelector('.gem-img-container');
 let upgradesNavButton = document.getElementById('upgrades-nav-button');
 let skillsNavButton = document.getElementById('skills-nav-button');
 let artifactNavButton = document.getElementById('artifacts-nav-button');
+
+let prestigeButton = document.querySelector('.prestige-button');
+
+let relic = document.getElementById('relic');
 
 let gemsPerClick = 1;
 let gemsPerSecond = 0;
@@ -46,13 +51,10 @@ const gemAnimationTimeout = (div) => {
 function buyUpgrade(upgradeName) {
 	const matchedUpgrade = upgrades.find((upgrade) => {
 		if (upgrade.name === upgradeName) {
-			console.log(upgradeName, 'upgradeName');
-			console.log(upgrade, 'upgrade');
 			return upgrade;
 		}
 	});
-	console.log(matchedUpgrade, 'matchedUpgrade');
-	console.log(matchedUpgrade.name, 'matchedUpgrade.name');
+
 	const upgradeDiv = document.getElementById(`${matchedUpgrade.name}-upgrade`);
 	const nextLevelDiv = document.getElementById(
 		`${matchedUpgrade.name}-next-level`
@@ -173,12 +175,58 @@ function load() {
 	gem.innerHTML = Math.round(parsedGem);
 }
 
+function prestige() {
+	upgrades.map((upgrade) => {
+		const matchedUpgrade = defaultUpgradeValues.find((defaultUpgrade) => {
+			if (upgrade.name === defaultUpgrade.name) return;
+		});
+
+		upgrade.parsedCost = matchedUpgrade.cost;
+		upgrade.parsedIncrease = matchedUpgrade.increase;
+
+		upgrade.level.innerHTML = 0;
+		upgrade.cost.innerHTML = matchedUpgrade.cost;
+		upgrade.increase.innerHTML = matchedUpgrade.increase;
+
+		const upgradeDiv = document.getElementById(
+			`${matchedUpgrade.name}-upgrade`
+		);
+		const nextLevelDiv = document.getElementById(
+			`${matchedUpgrade.name}-next-level`
+		);
+		const nextLevelP = document.getElementById(`${matchedUpgrade.name}-next-p`);
+
+		upgradeDiv.style.cssText = 'border-color: white;';
+		nextLevelDiv.style.cssText =
+			'background-color: white; font-weight: normal;';
+
+		if (matchedUpgrade.name === 'clicker') {
+			nextLevelP.innerHTML = `${matchedUpgrade.increase} gems per click`;
+		} else {
+			nextLevelP.innerHTML = `${matchedUpgrade.increase} gems per second`;
+		}
+
+		relic.innerHTML = Math.ceil(Math.sqrt(parsedGem - 999999) / 300);
+
+		gemsPerClick = 1;
+		gemsPerSecond = 0;
+		parsedGem = 0;
+		gem.innerHTML = parsedGem;
+	});
+}
+
 setInterval(() => {
 	parsedGem += gemsPerSecond / 10;
 	gem.innerHTML = Math.round(parsedGem);
 
 	gpcText.innerHTML = Math.round(gemsPerClick);
 	gpsText.innerHTML = Math.round(gemsPerSecond);
+
+	if (parsedGem >= 1000000) {
+		prestigeButton.style.display = 'block';
+	} else {
+		prestigeButton.style.display = 'none';
+	}
 	// Toggle to turn background music on or off:
 	// backgroundMusic.play();
 }, 100);
@@ -218,3 +266,4 @@ window.incrementGem = incrementGem;
 window.buyUpgrade = buyUpgrade;
 window.save = save;
 window.load = load;
+window.prestige = prestige;
