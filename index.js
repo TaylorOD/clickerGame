@@ -50,7 +50,10 @@ const gemAnimationTimeout = (div) => {
 
 function buyUpgrade(upgradeName) {
 	const matchedUpgrade = upgrades.find((upgrade) => {
+		console.log(upgrade, 'upgrade');
+		console.log(upgradeName, 'upgradeName');
 		if (upgrade.name === upgradeName) {
+			console.log(upgrade, 'upgrade inside match');
 			return upgrade;
 		}
 	});

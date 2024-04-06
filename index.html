@@ -24,31 +24,31 @@
 
 				<script id="upgrade-template" type="text/template">
 					<div class="upgrade type-{{type}}" onclick="buyUpgrade('{{name}}')" id="{{name}}-upgrade">
-					  <div class="left-section">
-					    <img
-					      src="{{image}}"
-					      alt=""
-					      class="upgrade-img"
-					    />
-					  </div>
-					  <div class="mid-section">
-					    <h4>{{name}}</h4>
-					    <div class="cost-info">
-					      <p class="cost-text">
+						<div class="left-section">
+							<img
+							src="{{image}}"
+							alt=""
+							class="upgrade-img"
+							/>
+						</div>
+						<div class="mid-section">
+							<h4>{{name}}</h4>
+							<div class="cost-info">
+								<p class="cost-text">
 									Cost: <span class="{{name}}-cost">{{cost}}</span>
 								</p>
-					      <img src="/assets/gem.png" alt="" class="gem-img" draggable="false" />
-					    </div>
-					  </div>
-					  <div class="right-section">
+								<img src="/assets/gem.png" alt="" class="gem-img" draggable="false" />
+							</div>
+						</div>
+						<div class="right-section">
 							Level <span class="{{name}}-level">0</span>
 						</div>
 
-					  <div class="next-level-info" id="{{name}}-next-level">
-					    <p id="{{name}}-next-p">
-					      +<span class="{{name}}-increase">{{increase}} </span> gems <br /> per click
-					    </p>
-					  </div>
+						<div class="next-level-info" id="{{name}}-next-level">
+							<p id="{{name}}-next-p">
+								+<span class="{{name}}-increase">{{increase}} </span> gems <br /> per click
+							</p>
+						</div>
 					</div>
 				</script>
 
@@ -82,5 +82,8 @@
 		</section>
 
 		<script type="module" src="index.js"></script>
+		<!-- TODO: Get these to import while cost and level still work -->
+		<script type="module" src="consts/skills.js"></script>
+		<script type="module" src="consts/artifacts.js"></script>
 	</body>
 </html>

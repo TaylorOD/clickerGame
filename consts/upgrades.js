@@ -168,6 +168,8 @@ export const upgrades = [
 		gemMultiplier: 1.055,
 		costMultiplier: 1.2,
 	},
+
+	// TODO: Add skills and artifacts here
 ];
 
 export const powerUpIntervals = [10, 20, 30, 50, 70, 100, 150, 200, 250, 300];

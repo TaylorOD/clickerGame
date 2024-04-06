@@ -38,7 +38,7 @@ export const defaultUpgradeValues = [
 
 export const defaultSkillValues = [
 	{
-		name: 'Stronger Clicks',
+		name: 'Stronger',
 		description: 'Upgrade your clicking power for 30 seconds!',
 		image: '/assets/skills/skill1.png',
 		cost: 1200,
