@@ -60,6 +60,7 @@ export const defaultArtifactValues = [
 		name: 'Artifact 1',
 		description: 'Permanently increase all gems gained by x amount',
 		image: '/assets/skills/skill1.png',
+		cost: 100,
 		type: 'artifact',
 	},
 ];

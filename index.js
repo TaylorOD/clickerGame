@@ -102,8 +102,7 @@ function buyUpgrade(upgradeName) {
 		// Handles upgrades for powerUp levels
 		if (index !== -1) {
 			upgradeDiv.style.cssText = 'border-color: orange;';
-			nextLevelDiv.style.cssText =
-				'background-color: #CC4500; font-weight: bold;';
+			nextLevelDiv.style.cssText = `background-color: #CC4500; font-weight: bold`;
 			nextLevelP.innerText = matchedUpgrade.powerUps[index].description;
 
 			matchedUpgrade.cost.innerHTML = Math.round(
@@ -115,11 +114,13 @@ function buyUpgrade(upgradeName) {
 			matchedUpgrade.cost.innerHTML = Math.round(
 				(matchedUpgrade.parsedCost *= matchedUpgrade.costMultiplier)
 			);
+
 			matchedUpgrade.parsedIncrease = parseFloat(
 				(matchedUpgrade.parsedIncrease * matchedUpgrade.gemMultiplier).toFixed(
 					2
 				)
 			);
+
 			if (matchedUpgrade.name === 'clicker') {
 				nextLevelP.innerHTML = `${matchedUpgrade.parsedIncrease} gems per click`;
 			} else {
@@ -178,7 +179,7 @@ function load() {
 function prestige() {
 	upgrades.map((upgrade) => {
 		const matchedUpgrade = defaultUpgradeValues.find((defaultUpgrade) => {
-			if (upgrade.name === defaultUpgrade.name) return;
+			return upgrade.name === defaultUpgrade.name;
 		});
 
 		upgrade.parsedCost = matchedUpgrade.cost;
